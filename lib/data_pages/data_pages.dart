@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:login_s_m/data_pages/home_cubit.dart';
+
+import '../homepages/login_page.dart';
+import '../shared_preference/sharedprefernece.dart';
+
+
 
 class datas extends StatelessWidget {
   const datas({super.key});
@@ -9,8 +15,37 @@ class datas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer:  Drawer(
+        child: Column(
+          children: [
+            SizedBox(height: 150),
+            InkWell(
+              onTap: () {
+                dlt(){
+                  LocalStorage().deleteApi();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                    builder: (context) => login(),
+                  ));
+                }
+
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 80,
+                  ),
+                  Text("LogOut"),
+                  Icon(Icons.logout)
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
       body: BlocProvider(
-        create: (context) => HomeCubit(),
+        create: (context) => HomeCubit(context),
         child: BlocBuilder<HomeCubit, HomeState>(builder: (context, state) {
           if (state is viewall) {
             return Column(
@@ -54,7 +89,7 @@ class datas extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                               SizedBox(
+                              SizedBox(
                                 width: 180,
                                 height: 100,
                                 child: Column(
@@ -68,15 +103,14 @@ class datas extends StatelessWidget {
                                           width: 10,
                                         ),
                                         Text(
-                                          state.data!.data!.leads![index]
-                                              .name!,
+                                          state.data!.data!.leads![index].name!,
                                           style: const TextStyle(
                                               color: Colors.blue,
                                               fontWeight: FontWeight.bold),
                                         )
                                       ],
                                     ),
-                                     Row(
+                                    Row(
                                       children: [
                                         const SizedBox(
                                           width: 10,
@@ -90,14 +124,14 @@ class datas extends StatelessWidget {
                                         )
                                       ],
                                     ),
-                                     Row(
+                                    Row(
                                       children: [
                                         const SizedBox(
                                           width: 10,
                                         ),
                                         Text(
-                                          state.data!.data!.leads![index]
-                                              .id.toString(),
+                                          state.data!.data!.leads![index].id
+                                              .toString(),
                                           style: const TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 12),
