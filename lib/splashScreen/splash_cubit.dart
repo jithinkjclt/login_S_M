@@ -1,5 +1,4 @@
 
-import 'dart:js';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -13,11 +12,12 @@ import '../shared_preference/sharedprefernece.dart';
 part 'splash_state.dart';
 
 class SplashCubit extends Cubit<SplashState> {
-  SplashCubit() : super(SplashInitial()){
-    flash(context);
+  SplashCubit(this.context) : super(SplashInitial()){
+    flash();
   }
+  BuildContext context;
 
-  flash(context) async {
+  flash() async {
     token = await LocalStorage().setApi();
     print(">>>>>>>>>>>>>>>>>>>>>>>.$token");
 

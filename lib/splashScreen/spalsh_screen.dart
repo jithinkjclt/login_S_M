@@ -11,10 +11,9 @@ class Splash extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: BlocProvider(
-          create: (context) => SplashCubit(),
+          create: (context) => SplashCubit(context),
           child: BlocBuilder<SplashCubit, SplashState>(
             builder: (context, state) {
-
               return const Column(
                 children: [
                   SizedBox(
